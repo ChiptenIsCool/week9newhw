@@ -1,0 +1,44 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Number of House/Apartment Rental Listing in Airbnb",
+    "width": 800,
+    "height": 600,
+    "projection": {
+        "type": "equirectangular"
+    },
+    "data": {
+        "url": "topojsonvictoria.json",
+        "format": {
+            "type": "topojson",
+            "feature": "features"
+        }
+    },
+    "transform": [
+        {
+        "lookup": "properties.vic_loca_2",
+        "from": {
+        "data": {
+        "url": "dta_final3.csv"
+        },
+        "key": "suburb",
+        "fields": ["count"]
+        }
+        }
+        ],
+       
+    "mark": {
+        "type": "geoshape"
+    },
+    "encoding": {
+        "color": {
+        "field": "count",
+        "type": "quantitative",
+        "scale": {"type": "log"}
+        },
+        "tooltip": [
+            {"field": "properties.vic_loca_2", "type": "nominal", "title": "suburb"},
+            {"field": "count", "type": "quantitative"}
+            ]
+        }           
+       
+}
